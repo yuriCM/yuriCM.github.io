@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yuri Carrasco</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Idea de diseño: hoja de planta. Tipografía condensada de rotulado, etiquetas en mono, y una tira tipo Gantt de cambio de formato como único gesto gráfico. */
+:root{
+  --bg:#F2F4F1;
+  --surface:#FFFFFF;
+  --ink:#14211C;
+  --muted:#526058;
+  --line:#D5DBD6;
+  --accent:#0B6B5D;
+  --signal:#D98E04;
+  --on-accent:#FFFFFF;
+  --display:"Archivo","Arial Narrow",Arial,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1512;
+    --surface:#16201B;
+    --ink:#E8EEE9;
+    --muted:#9AA8A0;
+    --line:#27332D;
+    --accent:#4FC3AE;
+    --signal:#F0B33A;
+    --on-accent:#0E1512;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1512;
+  --surface:#16201B;
+  --ink:#E8EEE9;
+  --muted:#9AA8A0;
+  --line:#27332D;
+  --accent:#4FC3AE;
+  --signal:#F0B33A;
+  --on-accent:#0E1512;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.6;
+}
+a{color:var(--accent)}
+a:focus-visible{outline:3px solid var(--signal);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:var(--display);font-stretch:75%;line-height:1.02;margin:0;text-wrap:balance;letter-spacing:-.01em}
+.label{font-family:var(--mono);font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+
+/* Barra superior */
+.top{border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-top:14px;padding-bottom:14px;flex-wrap:wrap}
+.top nav{display:flex;gap:20px;flex-wrap:wrap}
+.top nav a{font-family:var(--mono);font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink);text-decoration:none}
+.top nav a:hover{color:var(--accent);text-decoration:underline}
+
+/* Portada */
+.hero{padding:56px 0 48px;display:grid;grid-template-columns:1fr auto;gap:32px 48px;align-items:center}
+.hero .text{min-width:0}
+.photo{width:clamp(180px,24vw,280px);aspect-ratio:1;border-radius:50%;border:1px solid var(--line);background:var(--surface);overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;padding:0}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.hero h1{font-size:clamp(56px,11vw,128px);font-weight:800}
+.hero .role{font-family:var(--display);font-stretch:75%;font-weight:700;font-size:clamp(26px,4.4vw,44px);line-height:1.1;margin:10px 0 0;color:var(--accent)}
+.hero .lead{max-width:60ch;margin:24px 0 0;font-size:19px;color:var(--ink)}
+.hero .meta{margin-top:20px;display:flex;gap:10px 22px;flex-wrap:wrap}
+
+/* Secciones */
+section{padding:56px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+.sec-head h2{font-size:clamp(32px,5vw,48px);font-weight:800}
+
+/* Proyectos: captura grande arriba, texto debajo */
+.projects{display:flex;flex-direction:column;gap:88px}
+.project{display:flex;flex-direction:column;gap:20px}
+.shot{margin:0;background:var(--surface);border:1px solid var(--line);padding:clamp(20px,5vw,56px);display:flex;justify-content:center}
+.frame{width:100%;background:var(--bg);border:1px solid var(--line);overflow:hidden}
+.frame.window{max-width:980px;border-radius:8px;box-shadow:0 18px 40px rgba(0,0,0,.10)}
+.frame.window .bar{display:flex;gap:6px;padding:10px 12px;border-bottom:1px solid var(--line);background:var(--surface)}
+.frame.window .bar i{width:10px;height:10px;border:1px solid var(--muted);border-radius:50%}
+.frame.phone{max-width:340px;border-radius:34px;border:6px solid var(--ink);box-shadow:0 18px 40px rgba(0,0,0,.14)}
+.frame.phone .bar{height:22px;display:flex;justify-content:center;align-items:flex-start;padding-top:6px}
+.frame.phone .bar i{width:84px;height:6px;border-radius:3px;background:var(--ink)}
+.screen{position:relative;background:var(--surface)}
+.frame.window .screen{aspect-ratio:16/9}
+.frame.phone .screen{aspect-ratio:9/18}
+.screen img{display:block;width:100%;height:100%;object-fit:contain;background:#E4E6E9}
+.screen .ph{position:absolute;inset:14px;border:1px dashed var(--signal);display:flex;align-items:center;justify-content:center;text-align:center;padding:12px}
+.info{display:grid;grid-template-columns:1fr 1fr;gap:16px 40px;max-width:980px;width:100%;margin:0 auto}
+.project .head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px;max-width:980px;width:100%;margin:0 auto}
+.project .shot + .info{margin-top:8px}
+.project h3{font-size:clamp(32px,4.5vw,46px);font-weight:800}
+.info p{margin:0}
+.info .k{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);display:block;margin-bottom:2px}
+.tools{align-self:start}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-family:var(--mono);font-size:12px;border:1px solid var(--line);padding:2px 8px;color:var(--ink)}
+.todo{border:1px dashed var(--signal);padding:8px 10px;font-size:15px}
+.badge{font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;background:var(--ink);color:var(--bg);padding:2px 8px}
+
+.gallery img{position:absolute;inset:0;opacity:0;transition:opacity .25s}
+.gallery img.on{opacity:1}
+.shot{flex-direction:column;align-items:center;gap:18px}
+.switch{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.switch button{font-family:var(--mono);font-size:12.5px;text-transform:uppercase;letter-spacing:.06em;background:transparent;color:var(--ink);border:1px solid var(--line);padding:6px 12px;cursor:pointer}
+.switch button:hover{border-color:var(--accent)}
+.switch button.on{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.switch button:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
+@media (prefers-reduced-motion: reduce){.gallery img{transition:none}}
+
+.phones{display:grid;grid-template-columns:repeat(3,minmax(0,250px));gap:clamp(12px,3vw,36px);justify-content:center;width:100%}
+.phones .frame.phone{max-width:none;border-width:5px;border-radius:28px}
+.phones .frame.phone .screen{aspect-ratio:437/780}
+.phones .frame.phone .screen img{object-fit:cover;object-position:top}
+.captions{display:grid;grid-template-columns:repeat(3,minmax(0,250px));gap:clamp(12px,3vw,36px);justify-content:center;width:100%;text-align:center}
+
+/* Herramientas */
+.stack{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.stack h3{font-size:22px;font-weight:800;margin-bottom:10px}
+.stack ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.stack li{border-top:1px solid var(--line);padding-top:4px;font-size:15.5px}
+
+/* Sobre mí y contacto */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.about p{margin:0 0 14px;max-width:58ch}
+.links{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.btn{display:inline-block;background:var(--accent);color:var(--on-accent);text-decoration:none;padding:10px 18px;font-weight:600}
+.btn:hover{filter:brightness(1.08)}
+.btn:focus-visible{outline:3px solid var(--signal);outline-offset:3px}
+.btn.alt{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+footer{border-top:1px solid var(--line);padding:22px 0 40px}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr}
+  .photo{order:-1}
+  .info{grid-template-columns:1fr}
+  .stack{grid-template-columns:repeat(2,1fr)}
+  .about{grid-template-columns:1fr}
+}
+@media (max-width:480px){
+  .captions .label{font-size:10px;letter-spacing:.03em}
+  .phones .frame.phone{border-width:3px;border-radius:18px}
+  body{font-size:16px}
+  .stack{grid-template-columns:1fr}
+  .hero{padding-top:36px}
+}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <span class="label">Yuri Carrasco M. · Lima, Perú</span>
+    <nav aria-label="Secciones">
+      <a href="#proyectos">Proyectos</a>
+      <a href="#herramientas">Herramientas</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <div class="text">
+    <h1>Yuri Carrasco</h1>
+    <p class="role">Ingeniero Industrial · Analista de Datos</p>
+    <p class="lead">Ingeniero industrial con 13 años de experiencia en manufactura de productos de higiene, en líneas de pañales y papel. Desarrollo soluciones digitales para la operación: aplicaciones de registro en piso, tableros de indicadores y automatizaciones en Excel, que convierten la información de planta en datos para mejorar los cambios de grado, el mantenimiento y la planificación.</p>
+    <div class="meta">
+      <a class="btn" href="#proyectos">Ver proyectos</a>
+      <a class="btn alt" href="#contacto">Contacto</a>
+    </div>
+    </div>
+    <div class="photo"><img src="img/foto.jpg" alt="Yuri Carrasco"></div>
+  </div>
+
+  <section id="proyectos">
+    <div class="wrap">
+
+      <div class="projects">
+
+        <article class="project">
+            <div class="head"><h3>App en Power Apps · Tiempo de Herramienta CG</h3></div>
+          <figure class="shot">
+            <div class="frame window">
+              <div class="screen gallery" id="g-tiempo">
+                <img src="img/tiempo-herramienta.jpg" alt="Pantalla de inicio: máquina, fecha, turno, cambio de talla XXG a XG, SKU y tripulación del turno" class="on">
+                <img src="img/tiempo-herramienta-2.jpg" alt="Pantalla de registro: tareas por sección de máquina con hora de inicio y fin, tiempo estándar frente al real y cronómetro del cambio">
+              </div>
+            </div>
+            <div class="switch" role="group" aria-label="Pantallas de la app">
+              <button type="button" class="on" data-g="g-tiempo" data-i="0">1 · Inicio del cambio</button>
+              <button type="button" data-g="g-tiempo" data-i="1">2 · Registro de tareas</button>
+            </div>
+          </figure>
+          <div class="info">
+            <p><span class="k">Contexto</span>Durante un cambio de grado la máquina se detiene y el equipo ejecuta decenas de tareas en distintas secciones. No existía un registro en tiempo real de la duración de cada tarea.</p>
+            <p><span class="k">Qué hice</span>Aplicación en Power Apps que digitaliza el Gantt de cambio de grado. Cada tarea se registra desde piso con hora de inicio y fin, responsable y tiempo real frente al estándar, mientras un cronómetro mide la duración total del cambio.</p>
+            <p><span class="k">Resultado</span>Trazabilidad de todas las tareas del cambio. El equipo identifica en tiempo real las tareas pendientes y las que exceden su estándar, lo que permite controlar los tiempos y enfocar las mejoras.</p>
+            <div class="tools"><span class="k">Herramientas</span><div class="tags"><span class="tag">Power Apps</span><span class="tag">Power Fx</span><span class="tag">Listas de SharePoint</span><span class="tag">SMED</span></div></div>
+          </div>
+        </article>
+
+        <article class="project">
+            <div class="head"><h3>Tablero en Power BI · Análisis de cambios de grado</h3></div>
+          <figure class="shot">
+            <div class="frame window">
+              <div class="screen gallery" id="g-pbi">
+                <img src="img/powerbi-1.jpg" alt="Tablero de resumen mensual: cambios de grado del mes, tiempo promedio por cambio, cumplimiento del estándar, duración de cada cambio y tiempo por sección" class="on">
+                <img src="img/powerbi-2.jpg" alt="Tabla de detalle por tarea: tiempo estándar frente al real, desviación y cumplimiento">
+              </div>
+            </div>
+            <div class="switch" role="group" aria-label="Páginas del tablero">
+              <button type="button" class="on" data-g="g-pbi" data-i="0">1 · Resumen mensual</button>
+              <button type="button" data-g="g-pbi" data-i="1">2 · Detalle por tarea</button>
+            </div>
+          </figure>
+          <div class="info">
+            <p><span class="k">Contexto</span>Los registros de la app de cambio de grado debían convertirse en indicadores para gestionar el proceso.</p>
+            <p><span class="k">Qué hice</span>Tablero en Power BI con los indicadores clave: número de cambios por mes, duración de cada cambio frente al estándar, tiempo por sección de máquina y por turno, y tareas con mayor desviación.</p>
+            <p><span class="k">Objetivo</span>Identificar qué tareas y secciones prolongan los cambios de grado para priorizar las acciones de mejora.</p>
+            <div class="tools"><span class="k">Herramientas</span><div class="tags"><span class="tag">Power BI</span><span class="tag">DAX</span><span class="tag">SMED</span></div></div>
+          </div>
+        </article>
+
+        <article class="project">
+            <div class="head"><h3>Cambios Mecánicos - Cuidado Autónomo</h3></div>
+          <figure class="shot">
+            <div class="phones">
+              <div class="frame phone"><div class="bar" aria-hidden="true"><i></i></div><div class="screen"><img src="img/cuidado-1.jpg" alt="Pantalla de inicio: selección de línea PI-7, PI-8, PI-9 o PI-11"></div></div>
+              <div class="frame phone"><div class="bar" aria-hidden="true"><i></i></div><div class="screen"><img src="img/cuidado-2.jpg" alt="Tareas de la línea con su estado: vencidas, por vencer y al día, frecuencia y última vez hecha"></div></div>
+              <div class="frame phone"><div class="bar" aria-hidden="true"><i></i></div><div class="screen"><img src="img/cuidado-3.jpg" alt="Historial de cambios realizados con fecha, turno y responsable"></div></div>
+            </div>
+            <div class="captions" aria-hidden="true"><span class="label">1 · Elegir línea</span><span class="label">2 · Tareas y vencimientos</span><span class="label">3 · Historial</span></div>
+          </figure>
+          <div class="info">
+            <p><span class="k">Contexto</span>En el cuidado autónomo, cada línea tiene cambios mecánicos periódicos (rodillos, cuchillas, mangueras) con frecuencias distintas. No había una forma centralizada de saber cuáles estaban vencidos.</p>
+            <p><span class="k">Qué hice</span>Aplicación móvil en Power Apps donde el operador selecciona su línea y ve las tareas por estado (vencidas, por vencer y al día) según su frecuencia. Cada cambio realizado queda en el historial con fecha, turno y responsable.</p>
+            <p><span class="k">Resultado</span>Ningún cambio de repuesto queda sin ejecutar ni sin registro. Esto mejora el control del stock de repuestos y aumenta la disponibilidad de los equipos.</p>
+            <div class="tools"><span class="k">Herramientas</span><div class="tags"><span class="tag">Power Apps</span><span class="tag">Listas de SharePoint</span><span class="tag">TPM</span></div></div>
+          </div>
+        </article>
+
+        <article class="project">
+            <div class="head"><h3>Guía de Solución de problemas</h3></div>
+          <figure class="shot">
+            <div class="phones" style="grid-template-columns:repeat(2,minmax(0,250px))">
+              <div class="frame phone"><div class="bar" aria-hidden="true"><i></i></div><div class="screen" style="aspect-ratio:540/1122"><img src="img/guia-1.jpg" alt="Lista de problemas registrados por máquina"></div></div>
+              <div class="frame phone"><div class="bar" aria-hidden="true"><i></i></div><div class="screen" style="aspect-ratio:540/1122"><img src="img/guia-2.jpg" alt="Ficha de un problema con foto, máquina, descripción, acciones y posible causa"></div></div>
+            </div>
+            <div class="captions" aria-hidden="true" style="grid-template-columns:repeat(2,minmax(0,250px))"><span class="label">1 · Problemas registrados</span><span class="label">2 · Ficha con foto y solución</span></div>
+          </figure>
+          <div class="info">
+            <p><span class="k">Contexto</span>Las soluciones a las fallas recurrentes de los equipos no estaban documentadas en un solo lugar.</p>
+            <p><span class="k">Qué hice</span>Aplicación en AppSheet que funciona como base de conocimiento: cada problema se registra por máquina con foto, descripción, acciones correctivas y posible causa, para consultarlo desde piso.</p>
+            <p><span class="k">Resultado</span>Un registro centralizado de los problemas más habituales de las líneas y sus posibles soluciones, disponible desde el celular para que cualquier turno pueda consultarlo.</p>
+            <div class="tools"><span class="k">Herramientas</span><div class="tags"><span class="tag">AppSheet</span><span class="tag">Google Sheets</span></div></div>
+          </div>
+        </article>
+
+        <article class="project">
+            <div class="head"><h3>KC - Tools - PI-7 · Complemento en Excel con VBA</h3></div>
+          <figure class="shot">
+            <div class="frame window">
+              <div class="screen gallery" id="g-excel" style="aspect-ratio:1920/1140">
+                <img src="img/excel-1.jpg" alt="Pestaña propia en la cinta de Excel con tres botones; el plan de producción filtrado a una sola línea" class="on">
+                <img src="img/excel-2.jpg" alt="Cálculo de pallets por producir: pallets por hora, tiempo programado y hora de fin de producción">
+                <img src="img/excel-3.jpg" alt="Comparación de materiales entre la talla actual y la siguiente, con los cambios resaltados en rojo">
+              </div>
+            </div>
+            <div class="switch" role="group" aria-label="Herramientas del complemento">
+              <button type="button" class="on" data-g="g-excel" data-i="0">1 · Filtro por línea</button>
+              <button type="button" data-g="g-excel" data-i="1">2 · Cálculo de pallets</button>
+              <button type="button" data-g="g-excel" data-i="2">3 · Cambio de materiales</button>
+            </div>
+          </figure>
+          <div class="info">
+            <p><span class="k">Contexto</span>El plan de producción consolida todas las líneas. Filtrar una línea, calcular los pallets pendientes y la hora de fin de un producto, o verificar los materiales que cambian entre tallas eran tareas manuales y repetitivas.</p>
+            <p><span class="k">Qué hice</span>Complemento con pestaña propia en la cinta de Excel y tres herramientas: filtro del plan por línea; cálculo de pallets por hora, tiempo programado y hora de fin según la velocidad de máquina; y comparación de materiales entre la talla actual y la siguiente, con las diferencias resaltadas.</p>
+            <p><span class="k">Resultado</span>Consulta rápida y precisa de cuántos pallets faltan y cuántos se deben producir, sin cálculos manuales. Antes de cada cambio, el equipo ve de un vistazo qué materiales cambian respecto al producto actual.</p>
+            <div class="tools"><span class="k">Herramientas</span><div class="tags"><span class="tag">Excel</span><span class="tag">VBA</span><span class="tag">Personalización de la cinta</span></div></div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="herramientas">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Herramientas</h2>
+        <span class="label">Herramientas y metodologías</span>
+      </div>
+      <div class="stack">
+        <div>
+          <h3>Datos</h3>
+          <ul><li>Power BI y DAX</li><li>Excel y VBA</li><li>Estadística aplicada</li></ul>
+        </div>
+        <div>
+          <h3>Apps y automatización</h3>
+          <ul><li>Power Apps</li><li>Listas de SharePoint</li><li>Power Automate</li><li>AppSheet</li><li>Google Apps Script</li></ul>
+        </div>
+        <div>
+          <h3>Desarrollo web</h3>
+          <ul><li>React / Next.js</li><li>Supabase</li><li>PWA</li></ul>
+        </div>
+        <div>
+          <h3>Planta</h3>
+          <ul><li>SMED y cambios de grado</li><li>TPM y cuidado autónomo</li><li>Planificación de producción</li><li>Manufactura de productos de higiene</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacto">
+    <div class="wrap">
+      <div>
+        <div class="sec-head"><h2>Contacto</h2></div>
+        <div class="links">
+          <a class="btn" href="https://www.linkedin.com/in/yuri-carrasco-m">LinkedIn</a>
+          <a class="btn alt" href="https://github.com/yuriCM">GitHub · yuriCM</a>
+          <span class="label">Lima, Perú</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span class="label">Yuri Carrasco M. · Ingeniero industrial · Lima, Perú</span></div>
+</footer>
+
+<script>
+document.querySelectorAll('.switch button').forEach(function(b){
+  b.addEventListener('click',function(){
+    var g=document.getElementById(b.dataset.g), i=+b.dataset.i;
+    g.querySelectorAll('img').forEach(function(im,k){im.classList.toggle('on',k===i)});
+    b.parentNode.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b)});
+  });
+});
+</script>
+</body>
+</html>
